@@ -6,8 +6,8 @@ import (
 	"log"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
-	"github.com/ryusei112/temp-sensor-go/internal/i2c"
-	"github.com/ryusei112/temp-sensor-go/internal/tls"
+	"github.com/ryusei112/temp-sensor-go/i2c"
+	"github.com/ryusei112/temp-sensor-go/tls"
 )
 
 const (

@@ -8,14 +8,15 @@ import (
 )
 
 type RoomEnv struct {
-	Device string  `json:"devicename"`
-	Time   string  `json:"timestamp"`
-	Temp   float64 `json:"temp"`
-	Press  float64 `json:"press"`
-	Hum    float64 `json:"hum"`
+	Device   string  `json:"devicename"`
+	Time     string  `json:"timestamp"`
+	Temp     float64 `json:"temp"`
+	Press    float64 `json:"press"`
+	Hum      float64 `json:"hum"`
+	UnixTime int64   `json:"unixtime"`
 }
 
-func GetRoomEnv() RoomEnv {
+func GetRoomEnv() (roomEnv *RoomEnv) {
 
 	d, err := i2c.Open(&i2c.Devfs{Dev: "/dev/i2c-1"}, 0x76)
 	if err != nil {
@@ -32,10 +33,12 @@ func GetRoomEnv() RoomEnv {
 
 	ti := time.Now()
 
-	return RoomEnv{
-		Time:  ti.Format("2006/01/02 15:04:05"),
-		Temp:  t,
-		Press: p,
-		Hum:   h,
+	roomEnv = &RoomEnv{
+		Time:     ti.Format("2006/01/02 15:04:05"),
+		Temp:     t,
+		Press:    p,
+		Hum:      h,
+		UnixTime: ti.Unix(),
 	}
+	return
 }
